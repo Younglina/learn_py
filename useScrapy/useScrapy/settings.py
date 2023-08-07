@@ -17,7 +17,7 @@ NEWSPIDER_MODULE = "useScrapy.spiders"
 #USER_AGENT = "useScrapy (+http://www.yourdomain.com)"
 
 # Obey robots.txt rules
-ROBOTSTXT_OBEY = True
+ROBOTSTXT_OBEY = False
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
@@ -62,9 +62,9 @@ ROBOTSTXT_OBEY = True
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
-#    "useScrapy.pipelines.UsescrapyPipeline": 300,
-#}
+ITEM_PIPELINES = {
+   "useScrapy.pipelines.MovieItemPipeline": 300,
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
@@ -102,11 +102,3 @@ CONCURRENT_REQUESTS = 4
 DOWNLOAD_DELAY = 3
 # 随机化下载延迟
 RANDOMIZE_DOWNLOAD_DELAY = True
-
-# 是否遵守爬虫协议
-ROBOTSTXT_OBEY = True
-
-# 配置数据管道
-ITEM_PIPELINES = {
-   'useScrapy.pipelines.MovieItemPipeline': 300,
-}
