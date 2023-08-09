@@ -4,8 +4,12 @@ from dangdang.items import DangdangItem
 
 class DangSpider(scrapy.Spider):
     name = "dang"
-    allowed_domains = ["category.dangdang.com/cp01.54.00.00.00.00.html"]
-    start_urls = ["https://category.dangdang.com/cp01.54.00.00.00.00.html"]
+    allowed_domains = ["category.dangdang.com"]
+
+    def start_requests(self):
+        for page in range(10):
+            yield scrapy.Request(url=f'https://category.dangdang.com/pg{page}-cp01.54.00.00.00.00.html')
+                
 
     def parse(self, response):
         books = response.css('#component_59 li')
@@ -15,7 +19,6 @@ class DangSpider(scrapy.Spider):
             book['src'] = 'https:' + bk_item.css('.pic::attr(href)').get()
             book['author'] = bk_item.css('.search_book_author span a::attr(title)').get()
             search_star_line = bk_item.css('.search_star_line')
-            print(search_star_line.css('span'))
             if len(search_star_line.css('span'))>0:
                 book['star'] = re.findall(r"width:\s*(.*?);", search_star_line.css('.search_star_black span::attr(style)').get())[0]
                 book['comment_num'] = bk_item.css('.search_comment_num::text').get()
